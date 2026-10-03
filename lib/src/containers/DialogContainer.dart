@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
 import '../Header/HeaderWithCloseButton.dart';
 import '../shadow_store/shadow_store.dart';
@@ -11,6 +12,7 @@ class DialogContainer extends StatelessWidget {
     this.width = 500,
     this.height = 300,
     this.title,
+    this.hasSeperator = false,
     this.onClosed,
   });
 
@@ -25,6 +27,8 @@ class DialogContainer extends StatelessWidget {
 
   /// Optional dialog title.
   final String? title;
+
+  final bool hasSeperator;
 
   /// Called when the dialog close button is pressed.
   ///
@@ -57,20 +61,31 @@ class DialogContainer extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             boxShadow: ShadowStore.shadowV2,
-            border: Border.all(color: Colors.black12),
+            border: GradientBoxBorder(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Colors.black26, Colors.black12],
+              ),
+            ),
             borderRadius: BorderRadius.circular(_borderRadius),
           ),
           child: Column(
             spacing: _contentSpacing,
             children: [
               if (title != null)
-                HeaderV3(
-                  title: title!,
-                  onClosed: () => _handleClose(context),
+                Column(
+                  spacing: _contentSpacing,
+                  children: [
+                    HeaderV3(title: title!, onClosed: () => _handleClose(context)),
+                    if(hasSeperator)  Container(width: double.infinity,height: 1,decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [
+                Colors.transparent,Colors.black12,Colors.transparent
+              ])
+            ),),
+                  ],
                 ),
-              Expanded(
-                child: child,
-              ),
+              Expanded(child: child),
             ],
           ),
         ),
