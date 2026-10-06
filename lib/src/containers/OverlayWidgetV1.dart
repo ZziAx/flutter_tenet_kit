@@ -37,7 +37,7 @@ class HeaderConfig {
 ///
 /// The optional [T] generic allows the widget to rebuild when a
 /// [ChangeNotifier] provided above it changes.
-class OverlayWidgetV1<T extends ChangeNotifier> extends StatelessWidget {
+class OverlayWidgetV1<T extends ChangeNotifier?> extends StatelessWidget {
   const OverlayWidgetV1({
     super.key,
     required this.child,
