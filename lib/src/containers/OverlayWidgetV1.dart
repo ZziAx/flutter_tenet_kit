@@ -44,7 +44,7 @@ class OverlayWidgetV1<T extends ChangeNotifier?> extends StatelessWidget {
     required this.child,
     this.header,
     this.width = 150,
-    this.shadow = true,
+    this.hasShadow = true,
     this.padding = 15,
     this.decoration,
   });
@@ -55,7 +55,7 @@ class OverlayWidgetV1<T extends ChangeNotifier?> extends StatelessWidget {
 
   final double width;
 
-  final bool shadow;
+  final bool hasShadow;
 
   final double padding;
 
@@ -114,7 +114,7 @@ class OverlayWidgetV1<T extends ChangeNotifier?> extends StatelessWidget {
   BoxDecoration _buildDefaultDecoration() {
     return BoxDecoration(
       color: Colors.white,
-      boxShadow: shadow ? ShadowStore.shadowV2 : null,
+      boxShadow: hasShadow ? ShadowStore.shadowV2 : null,
       borderRadius: BorderRadius.circular(_borderRadius),
       border: const GradientBoxBorder(
         gradient: LinearGradient(

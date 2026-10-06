@@ -7,7 +7,6 @@ import '../TextFields/PrimaryTextField.dart';
 import '../builders/hover_tracker.dart';
 import '../buttons/PrimaryDropDownButton.dart';
 import '../containers/WithLabelContainer.dart';
-import '../data/svg_collection.dart';
 import '../enums/field_input_type.dart';
 import '../shadow_store/shadow_store.dart';
 

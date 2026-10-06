@@ -20,7 +20,6 @@ export 'src/containers/DisabledWidget.dart';
 export 'src/containers/OptionsRow.dart';
 export 'src/containers/OverlayWidgetV1.dart';
 export 'src/containers/WithLabelContainer.dart';
-export 'src/data/svg_collection.dart';
 export 'src/dialog/show_custom_dialog.dart';
 export 'src/enums/field_input_type.dart';
 export 'src/formatters/date_formatter.dart';
