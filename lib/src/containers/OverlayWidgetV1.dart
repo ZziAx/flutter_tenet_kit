@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tenet_kit/flutter_tenet_kit.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:provider/provider.dart';
 
@@ -37,13 +38,13 @@ class HeaderConfig {
 ///
 /// The optional [T] generic allows the widget to rebuild when a
 /// [ChangeNotifier] provided above it changes.
-class OverlayWidgetV1<T extends ChangeNotifier> extends StatelessWidget {
+class OverlayWidgetV1<T extends ChangeNotifier?> extends StatelessWidget {
   const OverlayWidgetV1({
     super.key,
     required this.child,
     this.header,
     this.width = 150,
-    this.shadow = false,
+    this.shadow = true,
     this.padding = 15,
     this.decoration,
   });
@@ -70,7 +71,7 @@ class OverlayWidgetV1<T extends ChangeNotifier> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.watch<TenetEssentialThemeData>();
+    final theme = maybeWatch<TenetEssentialThemeData>(context)??TenetEssentialThemeData(fontFamily: '');
 
     return Consumer<T>(
       builder: (context, _, child) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tenet_svg_collection/tenet_svg_collection.dart';
 import '../Buttons/GlowButton.dart';
 import '../TextFields/PrimaryTextField.dart';
 import '../builders/hover_tracker.dart';

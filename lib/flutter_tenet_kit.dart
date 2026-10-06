@@ -33,3 +33,4 @@ export 'src/formatters/to_persian_digit_formatter.dart';
 export 'src/overlay/OverlayTriggerWidget.dart';
 export 'src/shadow_store/shadow_store.dart';
 export 'src/utils/provider.dart';
+
