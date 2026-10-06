@@ -41,10 +41,12 @@ class FocusedBoxBorder extends StatelessWidget {
     this.margin = EdgeInsets.zero,
     this.padding = EdgeInsets.zero,
     this.style = FocusedBorderStyle.solid,
-    this.borderColor = Colors.black12,
-    this.focusedBorderColor = Colors.blue,
+    Color? borderColor = Colors.black12,
+    Color ? focusedBorderColor,
     this.backgroundColor = Colors.white,
-  });
+  }):
+  borderColor = borderColor??Colors.black12,
+  focusedBorderColor = focusedBorderColor??Colors.blueAccent;
 
   /// The content displayed inside the container.
   final Widget child;
