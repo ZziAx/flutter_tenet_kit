@@ -22,7 +22,7 @@ class PrimaryListTile {
     this.selected = false,
     this.backgroundColor = Colors.white,
     this.selectedBackgroundColor = const Color(0xFFF0F0F0),
-    this.hoverColor = const Color(0xFFFAFAFA),
+    this.hoverColor,
     this.color = Colors.black,
     this.selectedColor = Colors.black,
   });
@@ -72,7 +72,7 @@ class PrimaryListTile {
   final Color selectedBackgroundColor;
 
   /// Background color while hovered.
-  final Color hoverColor;
+  final Color ? hoverColor;
 
   /// Normal label color.
   final Color color;
@@ -203,7 +203,7 @@ class PrimaryListView extends StatelessWidget {
     }
 
     if (isHovered) {
-      return tile.hoverColor;
+      return tile.hoverColor??const Color(0xFFFAFAFA);
     }
 
     return tile.backgroundColor;
