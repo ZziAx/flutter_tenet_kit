@@ -125,19 +125,19 @@ class _PrimarydropdownState extends State<Primarydropdown> {
                       width: widget.width ?? 180,
                       child: Column(
                         children: [
-                          Expanded(
-                            child: Column(
-                              children: [
+                          // Expanded(
+                          //   child: Column(
+                          //     children: [
                                 ...List.generate(widget._items!.length, (i) {
                                   DropdownItem value = widget._items![i];
                                   return DropdownItemWidget(item: value);
                                 }),
-                              ],
-                            ),
-                          ),
+                          //     ],
+                          //   ),
+                          // ),
 
                           if (widget.bottom?.isNotEmpty ?? false)
-                            Container(height: 30),
+                            SizedBox(height: 30),
                           ...(widget.bottom ?? []).map((b) {
                             return DropdownItemWidget(item: b);
                           }),
@@ -212,7 +212,7 @@ class _PrimarydropdownState extends State<Primarydropdown> {
   Widget DropdownItemWidget({required DropdownItem item}) {
     final theme = context.watch<TenetEssentialThemeData>();
 
-    Color? color = item.color;
+    Color color = item.color??Colors.black;
 
     IconData? icon = item.icon;
     String? svg = item.svg;
@@ -224,7 +224,7 @@ class _PrimarydropdownState extends State<Primarydropdown> {
 
     final child = HoverTracker(
       builder: (isHovered) {
-        Color _color = isHovered ? (color!) : (color!);
+        Color _color = isHovered ? (color!.withOpacity(0.5)) : (color!);
         return Container(
           height: widget.itemHeight ?? 35,
           padding: EdgeInsets.symmetric(horizontal: 10),
@@ -248,6 +248,7 @@ class _PrimarydropdownState extends State<Primarydropdown> {
               if (icon != null)
                 SizedBox(
                   width: 30,
+                  height: 30,
                   child: Icon(icon, color: _color, size: item.size),
                 ),
             ],

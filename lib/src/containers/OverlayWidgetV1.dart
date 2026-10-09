@@ -163,7 +163,7 @@ class OverlayWidgetV1<T extends ChangeNotifier?> extends StatelessWidget {
             config.title ?? '',
             style: TextStyle(
               fontFamily: theme.fontFamily,
-              fontSize: 15,
+              fontSize: theme.headerSize,
               fontWeight: FontWeight.bold,
               color: Colors.black87,
             ),
