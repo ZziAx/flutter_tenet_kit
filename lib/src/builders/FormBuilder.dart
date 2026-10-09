@@ -14,7 +14,7 @@ import '../shadow_store/shadow_store.dart';
 ///
 /// This class intentionally contains no common state because text and
 /// dropdown fields have different configuration requirements.
-sealed class PrimaryField {
+class PrimaryField {
   const PrimaryField();
 }
 
@@ -263,10 +263,14 @@ class _PrimaryFieldView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return switch (field) {
-      PrimaryFormField field => _buildTextField(field),
-      PrimaryDropdownField field => _buildDropdownField(field),
-    };
+    if (field is PrimaryFormField) {
+      return _buildTextField(field as PrimaryFormField);
+    }
+    if (field is PrimaryDropdownField) {
+      return _buildDropdownField(field as PrimaryDropdownField);
+    }
+
+    return Container();
   }
 
   Widget _buildTextField(PrimaryFormField field) {
