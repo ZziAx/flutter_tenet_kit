@@ -149,10 +149,12 @@ class OverlayWidgetV1<T extends ChangeNotifier?> extends StatelessWidget {
       height: _headerHeight,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        spacing: 10,
         children: [
           if (config.actions != null)
             Expanded(
               child: Row(
+                spacing: 10,
                 children: config.actions!,
               ),
             )
