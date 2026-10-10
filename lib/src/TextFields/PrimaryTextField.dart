@@ -2,19 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_tenet_kit/flutter_tenet_kit.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
-import '../borderd_box/focused_box_border.dart';
-import '../builders/hover_tracker.dart';
-import '../enums/field_input_type.dart';
-import '../formatters/date_formatter.dart';
-import '../formatters/number_formatter.dart';
-import '../formatters/to_persian_digit_formatter.dart';
-import '../overlay/OverlayTriggerWidget.dart';
-import '../shadow_store/shadow_store.dart';
-import '../theme/TenetEssentialThemeData.dart';
 
 /// Base contract for field validation.
 abstract class FieldValidator {
@@ -319,7 +311,9 @@ class PrimaryTextFieldState extends State<PrimaryTextField> {
     }
 
     if (widget.validators != oldWidget.validators) {
-      _validate(showOverlay: false);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _validate(showOverlay: false);
+      });
     }
   }
 
@@ -442,7 +436,10 @@ class PrimaryTextFieldState extends State<PrimaryTextField> {
             0,
             (widget.height ?? _defaultHeight) + _errorOverlayOffset,
           ),
-          child: _buildErrorListView(),
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: _buildErrorListView(),
+          ),
         );
       },
     );
