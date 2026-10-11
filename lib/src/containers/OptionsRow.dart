@@ -8,11 +8,9 @@ class OptionsRow extends StatelessWidget {
   Function? onEdit;
   Function? onRemoved;
   Function? onView;
-  
 
   Widget Function(Widget)? onViewBuilder;
   Widget Function(Widget)? onEditBuilder;
-
 
   Function? onCopied;
   MainAxisAlignment mainAxisAlignment;
@@ -36,6 +34,14 @@ class OptionsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (onEdit == null &&
+        onRemoved == null &&
+        onView == null &&
+        onViewBuilder == null &&
+        onEditBuilder == null &&
+        onCopied == null) {
+      return Container();
+    }
     return SizedBox(
       height: 20,
       child: Opacity(
@@ -60,15 +66,16 @@ class OptionsRow extends StatelessWidget {
                     height: 10,
                   ),
                 ),
-              
-              if(onViewBuilder !=null) onViewBuilder!(
-                SvgPicture.string(
+
+              if (onViewBuilder != null)
+                onViewBuilder!(
+                  SvgPicture.string(
                     SvgCollection.grid,
                     color: color,
                     width: 10,
                     height: 10,
-                  )
-              ),
+                  ),
+                ),
               if (onCopied != null)
                 ClickableContainer(
                   enableHover: false,
@@ -82,14 +89,15 @@ class OptionsRow extends StatelessWidget {
                     height: 10,
                   ),
                 ),
-                if(onEditBuilder !=null) onEditBuilder!(
-                SvgPicture.string(
+              if (onEditBuilder != null)
+                onEditBuilder!(
+                  SvgPicture.string(
                     SvgCollection.pen,
                     color: color,
                     width: 12,
                     height: 12,
-                  )
-              ),
+                  ),
+                ),
               if (onEdit != null)
                 ClickableContainer(
                   enableHover: false,
@@ -103,7 +111,7 @@ class OptionsRow extends StatelessWidget {
                     height: 12,
                   ),
                 ),
-    
+
               if (onRemoved != null)
                 ClickableContainer(
                   enableHover: false,
