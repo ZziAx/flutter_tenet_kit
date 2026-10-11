@@ -134,32 +134,35 @@ class PrimaryListView extends StatelessWidget {
       builder: (isHovered) {
         return GestureDetector(
           onTap: tile.onClicked,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: Container(
-              height: 28,
-              padding: tile.padding ?? EdgeInsets.zero,
-              decoration: BoxDecoration(
-                color: _resolveBackgroundColor(
-                  tile,
-                  isHovered,
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                   OptionsRow(
-              onRemoved: tile.onRemoved,
-              onEdit: tile.onRenamed,
-              color: Colors.black,
-              onEditBuilder: tile.renameBuilder,
-            ),
-                  Expanded(
-                    child: _buildContent(
-                      tile,
-                    ),
+          child: Container(
+            color: Colors.white,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+              child: Container(
+                height: 28,
+                padding: tile.padding ?? EdgeInsets.zero,
+                decoration: BoxDecoration(
+                  color: _resolveBackgroundColor(
+                    tile,
+                    isHovered,
                   ),
-                ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                     OptionsRow(
+                onRemoved: tile.onRemoved,
+                onEdit: tile.onRenamed,
+                color: Colors.black,
+                onEditBuilder: tile.renameBuilder,
+              ),
+                    Expanded(
+                      child: _buildContent(
+                        tile,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
