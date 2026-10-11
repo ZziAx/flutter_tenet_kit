@@ -86,8 +86,8 @@ class OptionsRow extends StatelessWidget {
                 SvgPicture.string(
                     SvgCollection.pen,
                     color: color,
-                    width: 10,
-                    height: 10,
+                    width: 12,
+                    height: 12,
                   )
               ),
               if (onEdit != null)
@@ -99,8 +99,8 @@ class OptionsRow extends StatelessWidget {
                   child: SvgPicture.string(
                     SvgCollection.pen,
                     color: color,
-                    width: 10,
-                    height: 10,
+                    width: 12,
+                    height: 12,
                   ),
                 ),
     
