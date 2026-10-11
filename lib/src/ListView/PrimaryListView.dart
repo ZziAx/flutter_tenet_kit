@@ -152,6 +152,7 @@ class PrimaryListView extends StatelessWidget {
               onRemoved: tile.onRemoved,
               onEdit: tile.onRenamed,
               color: Colors.black,
+              onEditBuilder: tile.renameBuilder,
             ),
                   Expanded(
                     child: _buildContent(
