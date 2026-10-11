@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../builders/hover_tracker.dart';
+import 'package:flutter_tenet_kit/flutter_tenet_kit.dart';
 
 /// Configuration for a single item in [PrimaryListView].
 ///
@@ -145,8 +145,20 @@ class PrimaryListView extends StatelessWidget {
                   isHovered,
                 ),
               ),
-              child: _buildContent(
-                tile,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                   OptionsRow(
+              onRemoved: tile.onRemoved,
+              onEdit: tile.onRenamed,
+              color: Colors.black,
+            ),
+                  Expanded(
+                    child: _buildContent(
+                      tile,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
