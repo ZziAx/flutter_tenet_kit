@@ -30,7 +30,7 @@ class OptionsRow extends StatelessWidget {
     this.onCopied,
     this.visible = true,
     this.color = Colors.white,
-    this.textDirection = TextDirection.ltr,
+    this.textDirection = TextDirection.rtl,
     this.mainAxisAlignment = MainAxisAlignment.center,
   });
 
