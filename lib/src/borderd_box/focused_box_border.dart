@@ -131,7 +131,10 @@ class FocusedBoxBorder extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: innerRadius,
-          border: Border.all(
+          border:justUnderline?Border(bottom: BorderSide(
+              color: hasFocus ? focusedBorderColor : Colors.transparent,
+            width: 1,
+          )): Border.all(
             color: hasFocus ? focusedBorderColor : Colors.transparent,
             width: 1,
           ),
