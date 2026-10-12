@@ -41,12 +41,12 @@ class FocusedBoxBorder extends StatelessWidget {
     this.margin = EdgeInsets.zero,
     this.padding = EdgeInsets.zero,
     this.style = FocusedBorderStyle.solid,
+    this.justUnderline = false,
     Color? borderColor = Colors.black12,
-    Color ? focusedBorderColor,
+    Color? focusedBorderColor,
     this.backgroundColor = Colors.white,
-  }):
-  borderColor = borderColor??Colors.black12,
-  focusedBorderColor = focusedBorderColor??Colors.blueAccent;
+  }) : borderColor = borderColor ?? Colors.black12,
+       focusedBorderColor = focusedBorderColor ?? Colors.blueAccent;
 
   /// The content displayed inside the container.
   final Widget child;
@@ -80,6 +80,7 @@ class FocusedBoxBorder extends StatelessWidget {
   /// Background color of the container.
   final Color backgroundColor;
 
+  final bool justUnderline;
   double get _safeRadius => radius.clamp(0, double.infinity);
 
   double get _innerRadius => (_safeRadius - 1).clamp(0, double.infinity);
@@ -125,7 +126,7 @@ class FocusedBoxBorder extends StatelessWidget {
         color: backgroundColor,
         borderRadius: outerRadius,
         boxShadow: hasShadow && hasFocus ? ShadowStore.shadowV2 : null,
-        border: Border.all(color: effectiveBorderColor, width: 1),
+        border:justUnderline?Border(bottom: BorderSide(color: effectiveBorderColor, width: 1)): Border.all(color: effectiveBorderColor, width: 1),
       ),
       child: Container(
         decoration: BoxDecoration(

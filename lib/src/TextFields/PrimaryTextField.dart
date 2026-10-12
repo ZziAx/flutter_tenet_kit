@@ -142,6 +142,7 @@ class PrimaryTextField extends StatefulWidget {
     this.style,
     this.contentPadding,
     this.validators = const [],
+    this.justUnderline = false
   });
 
   final String text;
@@ -205,8 +206,10 @@ class PrimaryTextField extends StatefulWidget {
   final List<FieldValidator> validators;
 
   final double radius;
-  final EdgeInsetsGeometry ?contentPadding;
 
+  final EdgeInsetsGeometry? contentPadding;
+
+  final bool justUnderline;
 
   @override
   State<PrimaryTextField> createState() => PrimaryTextFieldState();
@@ -579,7 +582,9 @@ class PrimaryTextFieldState extends State<PrimaryTextField> {
       decoration: InputDecoration(
         hintText: widget.placeHolder,
         hintStyle: style.copyWith(color: Colors.black38),
-        contentPadding:widget.contentPadding?? EdgeInsets.only(left: 5, right: _hasWarning ? 20 : 5),
+        contentPadding:
+            widget.contentPadding ??
+            EdgeInsets.only(left: 5, right: _hasWarning ? 20 : 5),
         border: _transparentBorder,
         focusedBorder: _transparentBorder,
         enabledBorder: _transparentBorder,
@@ -622,6 +627,7 @@ class PrimaryTextFieldState extends State<PrimaryTextField> {
       style: widget.borderStyle,
       hasShadow: widget.hasShadow,
       borderColor: showWarning ? _warningBorderColor : _normalBorderColor,
+      justUnderline:widget.justUnderline,
       backgroundColor:
           showWarning ? _warningBackgroundColor : _normalBackgroundColor,
       child: CompositedTransformTarget(
