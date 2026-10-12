@@ -164,6 +164,7 @@ class OverlayWidgetV1<T extends ChangeNotifier?> extends StatelessWidget {
 
           Row(
             spacing: 5,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 config.title ?? '',
@@ -175,7 +176,7 @@ class OverlayWidgetV1<T extends ChangeNotifier?> extends StatelessWidget {
                 ),
               ),
 if(config.svg!=null)
-  SvgPicture.string(config.svg!,color: Colors.black54,width: 13,height: 13,)
+  SvgPicture.string(config.svg!,color: Colors.black54,width: 14,height: 14,)
             ],
           ),
         ],
