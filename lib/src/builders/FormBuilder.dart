@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -105,7 +104,7 @@ class PrimaryDropdownField extends PrimaryField<DropdownItem> {
 /// The form manages the visual layout while each field object holds its
 /// current value.
 class PrimaryFormBuilder extends StatefulWidget {
-  const PrimaryFormBuilder({
+   PrimaryFormBuilder({
     super.key,
     required this.title,
     required this.fields,
@@ -115,6 +114,7 @@ class PrimaryFormBuilder extends StatefulWidget {
     this.onConfirmed,
     this.onCanceled,
     this.decoration,
+    this.actionsWrap = false,
   });
 
   /// Form title.
@@ -141,6 +141,8 @@ class PrimaryFormBuilder extends StatefulWidget {
 
   /// Optional custom form decoration.
   final BoxDecoration? decoration;
+
+  bool actionsWrap;
 
   static const double _width = 400;
   static const double _borderRadius = 7;
@@ -232,42 +234,45 @@ class _PrimaryFormBuilderState extends State<PrimaryFormBuilder> {
   }
 
   Widget _buildActions(BuildContext context) {
+    Widget cancelButton = GlowButton(
+      label: 'لغو',
+      shadowColor: Colors.grey.shade50,
+      backgroundColor: Colors.grey.shade100,
+      color: Colors.black,
+      onClicked: () {
+        if (widget.onCanceled != null) {
+          widget.onCanceled!();
+          return;
+        }
+
+        Navigator.of(context).pop();
+      },
+    );
+
+    Widget confirmButton = GlowButton(
+      onClicked: () {
+        if (widget.onConfirmed != null) {
+          widget.onConfirmed!(fields);
+          return;
+        }
+
+        Navigator.of(context).pop(fields);
+      },
+    );
     return SizedBox(
       width: double.infinity,
       height: PrimaryFormBuilder._buttonHeight,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         spacing: PrimaryFormBuilder._buttonSpacing,
-        children: [
+        children:widget.actionsWrap?[
+          Flexible(flex: 1,fit: FlexFit.tight,child: cancelButton,),
+          Flexible(flex: 1,fit: FlexFit.tight,child: confirmButton,)
+        ]: [
+          SizedBox(width: PrimaryFormBuilder._buttonWidth, child: cancelButton),
           SizedBox(
             width: PrimaryFormBuilder._buttonWidth,
-            child: GlowButton(
-              label: 'لغو',
-              shadowColor: Colors.grey.shade50,
-              backgroundColor: Colors.grey.shade100,
-              color: Colors.black,
-              onClicked: () {
-                if (widget.onCanceled != null) {
-                  widget.onCanceled!();
-                  return;
-                }
-
-                Navigator.of(context).pop();
-              },
-            ),
-          ),
-          SizedBox(
-            width: PrimaryFormBuilder._buttonWidth,
-            child: GlowButton(
-              onClicked: () {
-                if (widget.onConfirmed != null) {
-                  widget.onConfirmed!(fields);
-                  return;
-                }
-
-                Navigator.of(context).pop(fields);
-              },
-            ),
+            child: confirmButton,
           ),
         ],
       ),
