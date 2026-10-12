@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tenet_kit/flutter_tenet_kit.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:provider/provider.dart';
@@ -161,14 +162,21 @@ class OverlayWidgetV1<T extends ChangeNotifier?> extends StatelessWidget {
           else
             const Spacer(),
 
-          Text(
-            config.title ?? '',
-            style: TextStyle(
-              fontFamily: theme.fontFamily,
-              fontSize: theme.headerSize,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
-            ),
+          Row(
+            spacing: 5,
+            children: [
+              Text(
+                config.title ?? '',
+                style: TextStyle(
+                  fontFamily: theme.fontFamily,
+                  fontSize: theme.headerSize,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+if(config.svg!=null)
+  SvgPicture.string(config.svg!,color: Colors.black54,width: 13,height: 13,)
+            ],
           ),
         ],
       ),
