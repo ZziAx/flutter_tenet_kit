@@ -1,29 +1,28 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_tenet_kit/flutter_tenet_kit.dart';
 import 'package:tenet_svg_collection/tenet_svg_collection.dart';
-import '../Buttons/GlowButton.dart';
-import '../TextFields/PrimaryTextField.dart';
-import '../builders/hover_tracker.dart';
-import '../Buttons/PrimaryDropDownButton.dart';
-import '../containers/WithLabelContainer.dart';
-import '../enums/field_input_type.dart';
-import '../shadow_store/shadow_store.dart';
 
 /// Base type for fields supported by [PrimaryFormBuilder].
 ///
 /// This class intentionally contains no common state because text and
 /// dropdown fields have different configuration requirements.
-class PrimaryField {
-  const PrimaryField();
+class PrimaryField<T> {
+  PrimaryField(this.value);
+  T value;
+  void setValue(T value) {
+    this.value = value;
+  }
 }
 
 /// Configuration and runtime value for a text-based form field.
-class PrimaryFormField extends PrimaryField {
+class PrimaryFormField extends PrimaryField<String> {
   PrimaryFormField({
     required this.placeholder,
     this.title,
-    this.value = '',
+    String value = '',
     this.inputType = FieldInputType.string,
     this.textDirection = TextDirection.rtl,
     this.textAlign = TextAlign.right,
@@ -32,7 +31,8 @@ class PrimaryFormField extends PrimaryField {
     this.formatters,
     this.onChanged,
     GlobalKey<PrimaryTextFieldState>? key,
-  }) : key = key ?? GlobalKey<PrimaryTextFieldState>();
+  }) : key = key ?? GlobalKey<PrimaryTextFieldState>(),
+       super(value);
 
   /// Optional label displayed above the field.
   String? title;
@@ -44,7 +44,6 @@ class PrimaryFormField extends PrimaryField {
   ///
   /// This is mutable because the form uses the field object as its
   /// runtime value holder.
-  String value;
 
   /// Input behavior of the text field.
   final FieldInputType inputType;
@@ -77,13 +76,13 @@ class PrimaryFormField extends PrimaryField {
 }
 
 /// Configuration and runtime value for a dropdown form field.
-class PrimaryDropdownField extends PrimaryField {
+class PrimaryDropdownField extends PrimaryField<DropdownItem> {
   PrimaryDropdownField({
     required this.items,
     required this.defaultItem,
     this.textDirection = TextDirection.rtl,
     this.onChanged,
-  }) : value = defaultItem;
+  }) : super(defaultItem);
 
   /// Available dropdown options.
   final List<DropdownItem> items;
@@ -92,7 +91,7 @@ class PrimaryDropdownField extends PrimaryField {
   final DropdownItem defaultItem;
 
   /// Current selected value.
-  DropdownItem value;
+  // DropdownItem value;
 
   /// Direction used by the dropdown.
   final TextDirection textDirection;
@@ -105,7 +104,7 @@ class PrimaryDropdownField extends PrimaryField {
 ///
 /// The form manages the visual layout while each field object holds its
 /// current value.
-class PrimaryFormBuilder extends StatelessWidget {
+class PrimaryFormBuilder extends StatefulWidget {
   const PrimaryFormBuilder({
     super.key,
     required this.title,
@@ -153,22 +152,38 @@ class PrimaryFormBuilder extends StatelessWidget {
   static const double _buttonSpacing = 10;
 
   @override
+  State<PrimaryFormBuilder> createState() => _PrimaryFormBuilderState();
+}
+
+class _PrimaryFormBuilderState extends State<PrimaryFormBuilder> {
+  late final List<PrimaryField> fields;
+  @override
+  void initState() {
+    super.initState();
+    fields = widget.fields;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: Center(
         child: Container(
-          width: _width,
-          constraints: BoxConstraints(maxHeight: maxHeight),
-          padding: padding,
-          decoration: decoration ?? _defaultDecoration,
+          width: PrimaryFormBuilder._width,
+          constraints: BoxConstraints(maxHeight: widget.maxHeight),
+          padding: widget.padding,
+          decoration: widget.decoration ?? _defaultDecoration,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               _buildTitle(),
-              const SizedBox(height: _fieldListVerticalPadding),
+              const SizedBox(
+                height: PrimaryFormBuilder._fieldListVerticalPadding,
+              ),
               Expanded(child: _buildFieldList()),
-              const SizedBox(height: _fieldListVerticalPadding),
+              const SizedBox(
+                height: PrimaryFormBuilder._fieldListVerticalPadding,
+              ),
               _buildActions(context),
             ],
           ),
@@ -182,28 +197,36 @@ class PrimaryFormBuilder extends StatelessWidget {
     return BoxDecoration(
       color: Colors.white,
       boxShadow: ShadowStore.shadowV2,
-      borderRadius: BorderRadius.circular(_borderRadius),
+      borderRadius: BorderRadius.circular(PrimaryFormBuilder._borderRadius),
       border: Border.all(color: Colors.black12),
     );
   }
 
   Widget _buildTitle() {
     return Text(
-      title,
+      widget.title,
       style: const TextStyle(
         fontFamily: 'yekan bakh',
         fontWeight: FontWeight.bold,
-        fontSize: _titleFontSize,
+        fontSize: PrimaryFormBuilder._titleFontSize,
       ),
     );
   }
 
   Widget _buildFieldList() {
     return SingleChildScrollView(
-      physics: physics,
+      physics: widget.physics,
       child: Column(
-        spacing: _fieldSpacing,
-        children: [for (final field in fields) _PrimaryFieldView(field: field)],
+        spacing: PrimaryFormBuilder._fieldSpacing,
+        children: List.generate(fields.length, (i) {
+          final field = fields[i];
+          return _PrimaryFieldView(
+            field: field,
+            onChanged: (field) {
+              fields[i].setValue(field.value);
+            },
+          );
+        }),
       ),
     );
   }
@@ -211,21 +234,21 @@ class PrimaryFormBuilder extends StatelessWidget {
   Widget _buildActions(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: _buttonHeight,
+      height: PrimaryFormBuilder._buttonHeight,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
-        spacing: _buttonSpacing,
+        spacing: PrimaryFormBuilder._buttonSpacing,
         children: [
           SizedBox(
-            width: _buttonWidth,
+            width: PrimaryFormBuilder._buttonWidth,
             child: GlowButton(
               label: 'لغو',
               shadowColor: Colors.grey.shade50,
               backgroundColor: Colors.grey.shade100,
               color: Colors.black,
               onClicked: () {
-                if (onCanceled != null) {
-                  onCanceled!();
+                if (widget.onCanceled != null) {
+                  widget.onCanceled!();
                   return;
                 }
 
@@ -234,11 +257,11 @@ class PrimaryFormBuilder extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: _buttonWidth,
+            width: PrimaryFormBuilder._buttonWidth,
             child: GlowButton(
               onClicked: () {
-                if (onConfirmed != null) {
-                  onConfirmed!(fields);
+                if (widget.onConfirmed != null) {
+                  widget.onConfirmed!(fields);
                   return;
                 }
 
@@ -257,7 +280,8 @@ class PrimaryFormBuilder extends StatelessWidget {
 /// Keeping field-specific rendering here prevents [PrimaryFormBuilder]
 /// from becoming a large conditional widget.
 class _PrimaryFieldView extends StatelessWidget {
-  const _PrimaryFieldView({required this.field});
+  Function(PrimaryField) onChanged;
+  _PrimaryFieldView({required this.field, required this.onChanged});
 
   final PrimaryField field;
 
@@ -290,8 +314,9 @@ class _PrimaryFieldView extends StatelessWidget {
       text: field.value,
       onFocusedOut: (value) => value,
       onChanged: (value) {
-        field.value = value;
+        field.setValue(value);
         field.onChanged?.call(value);
+        onChanged(field);
       },
     );
 
@@ -315,9 +340,10 @@ class _PrimaryFieldView extends StatelessWidget {
             items: field.items,
             decoration: const BoxDecoration(),
             defaultItem: field.value.value,
-            onSelected: (value) {
-              field.value = value;
+            onSelected: (DropdownItem value) {
+              field.setValue(value);
               field.onChanged?.call(value);
+              onChanged(field);
             },
             child: _buildDropdownChild(field: field, isHovered: isHovered),
           ),
