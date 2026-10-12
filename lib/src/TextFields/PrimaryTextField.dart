@@ -140,6 +140,7 @@ class PrimaryTextField extends StatefulWidget {
     this.dynamicValue,
     this.fontSize,
     this.style,
+    this.contentPadding,
     this.validators = const [],
   });
 
@@ -204,6 +205,8 @@ class PrimaryTextField extends StatefulWidget {
   final List<FieldValidator> validators;
 
   final double radius;
+  final EdgeInsetsGeometry ?contentPadding;
+
 
   @override
   State<PrimaryTextField> createState() => PrimaryTextFieldState();
@@ -576,7 +579,7 @@ class PrimaryTextFieldState extends State<PrimaryTextField> {
       decoration: InputDecoration(
         hintText: widget.placeHolder,
         hintStyle: style.copyWith(color: Colors.black38),
-        contentPadding: EdgeInsets.only(left: 5, right: _hasWarning ? 20 : 5),
+        contentPadding:widget.contentPadding?? EdgeInsets.only(left: 5, right: _hasWarning ? 20 : 5),
         border: _transparentBorder,
         focusedBorder: _transparentBorder,
         enabledBorder: _transparentBorder,
