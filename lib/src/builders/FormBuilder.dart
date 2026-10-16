@@ -180,7 +180,7 @@ class _PrimaryFormBuilderState extends State<PrimaryFormBuilder> {
   bool isValid() {
     for (final field in fields) {
       if (field is PrimaryFormField) {
-        if (!(field.key.currentState?.isValid() ?? true)) {
+        if (!(field.key.currentState?.isValid() ?? false)) {
           return false;
         }
       }
