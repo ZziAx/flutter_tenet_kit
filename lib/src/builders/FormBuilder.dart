@@ -33,10 +33,12 @@ class PrimaryFormField extends PrimaryField<String> {
     this.persianDigit = true,
     this.trailingBuilder,
     this.formatters,
-    this.onChanged,FocusedBorderStyle ?borderStyle,
+    this.onChanged,
+    FocusedBorderStyle? borderStyle,
     this.validators,
     GlobalKey<PrimaryTextFieldState>? key,
-  }) :borderStyle = borderStyle??FocusedBorderStyle.doubled, key = key ?? GlobalKey<PrimaryTextFieldState>(),
+  }) : borderStyle = borderStyle ?? FocusedBorderStyle.doubled,
+       key = key ?? GlobalKey<PrimaryTextFieldState>(),
        super(value);
 
   /// Optional label displayed above the field.
@@ -72,7 +74,6 @@ class PrimaryFormField extends PrimaryField<String> {
   final List<TextInputFormatter>? formatters;
 
   final List<FieldValidator>? validators;
-
 
   /// Key used to access the underlying [PrimaryTextFieldState].
   final GlobalKey<PrimaryTextFieldState> key;
@@ -176,6 +177,18 @@ class _PrimaryFormBuilderState extends State<PrimaryFormBuilder> {
     fields = widget.fields;
   }
 
+  bool isValid() {
+    for (final field in fields) {
+      if (field is PrimaryFormField) {
+        if (!(field.key.currentState?.isValid() ?? true)) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -197,7 +210,9 @@ class _PrimaryFormBuilderState extends State<PrimaryFormBuilder> {
               const SizedBox(
                 height: PrimaryFormBuilder._fieldListVerticalPadding,
               ),
-              _buildActions(context),
+              DisabledWidget(
+                enabled: isValid(),
+                child: _buildActions(context)),
             ],
           ),
         ),
@@ -338,7 +353,7 @@ class _PrimaryFieldView extends StatelessWidget {
       textDirection: field.textDirection,
       inputType: field.inputType,
       text: field.value,
-      validators: field.validators??[],
+      validators: field.validators ?? [],
       onFocusedOut: (value) => value,
       onChanged: (value) {
         field.setValue(value);
