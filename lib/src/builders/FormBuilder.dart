@@ -34,6 +34,7 @@ class PrimaryFormField extends PrimaryField<String> {
     this.trailingBuilder,
     this.formatters,
     this.onChanged,FocusedBorderStyle ?borderStyle,
+    this.validators,
     GlobalKey<PrimaryTextFieldState>? key,
   }) :borderStyle = borderStyle??FocusedBorderStyle.doubled, key = key ?? GlobalKey<PrimaryTextFieldState>(),
        super(value);
@@ -69,6 +70,9 @@ class PrimaryFormField extends PrimaryField<String> {
 
   /// Optional input formatters.
   final List<TextInputFormatter>? formatters;
+
+  final List<FieldValidator>? validators;
+
 
   /// Key used to access the underlying [PrimaryTextFieldState].
   final GlobalKey<PrimaryTextFieldState> key;
@@ -334,6 +338,7 @@ class _PrimaryFieldView extends StatelessWidget {
       textDirection: field.textDirection,
       inputType: field.inputType,
       text: field.value,
+      validators: field.validators??[],
       onFocusedOut: (value) => value,
       onChanged: (value) {
         field.setValue(value);
