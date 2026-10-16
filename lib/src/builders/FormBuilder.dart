@@ -16,6 +16,11 @@ class PrimaryField<T> {
   }
 }
 
+class PrimaryCustomField<T> extends PrimaryField<T?> {
+  Widget child;
+  PrimaryCustomField({T? value, required this.child}) : super(value);
+}
+
 /// Configuration and runtime value for a text-based form field.
 class PrimaryFormField extends PrimaryField<String> {
   PrimaryFormField({
@@ -104,7 +109,7 @@ class PrimaryDropdownField extends PrimaryField<DropdownItem> {
 /// The form manages the visual layout while each field object holds its
 /// current value.
 class PrimaryFormBuilder extends StatefulWidget {
-   PrimaryFormBuilder({
+  PrimaryFormBuilder({
     super.key,
     required this.title,
     required this.fields,
@@ -265,16 +270,22 @@ class _PrimaryFormBuilderState extends State<PrimaryFormBuilder> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         spacing: PrimaryFormBuilder._buttonSpacing,
-        children:widget.actionsWrap?[
-          Flexible(flex: 1,fit: FlexFit.tight,child: cancelButton,),
-          Flexible(flex: 1,fit: FlexFit.tight,child: confirmButton,)
-        ]: [
-          SizedBox(width: PrimaryFormBuilder._buttonWidth, child: cancelButton),
-          SizedBox(
-            width: PrimaryFormBuilder._buttonWidth,
-            child: confirmButton,
-          ),
-        ],
+        children:
+            widget.actionsWrap
+                ? [
+                  Flexible(flex: 1, fit: FlexFit.tight, child: cancelButton),
+                  Flexible(flex: 1, fit: FlexFit.tight, child: confirmButton),
+                ]
+                : [
+                  SizedBox(
+                    width: PrimaryFormBuilder._buttonWidth,
+                    child: cancelButton,
+                  ),
+                  SizedBox(
+                    width: PrimaryFormBuilder._buttonWidth,
+                    child: confirmButton,
+                  ),
+                ],
       ),
     );
   }
@@ -297,6 +308,9 @@ class _PrimaryFieldView extends StatelessWidget {
     }
     if (field is PrimaryDropdownField) {
       return _buildDropdownField(field as PrimaryDropdownField);
+    }
+    if (field is PrimaryCustomField) {
+      return (field as PrimaryCustomField).child;
     }
 
     return Container();
