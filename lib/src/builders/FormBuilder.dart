@@ -210,9 +210,7 @@ class _PrimaryFormBuilderState extends State<PrimaryFormBuilder> {
               const SizedBox(
                 height: PrimaryFormBuilder._fieldListVerticalPadding,
               ),
-              DisabledWidget(
-                enabled: isValid(),
-                child: _buildActions(context)),
+              _buildActions(context),
             ],
           ),
         ),
@@ -275,15 +273,19 @@ class _PrimaryFormBuilderState extends State<PrimaryFormBuilder> {
       },
     );
 
-    Widget confirmButton = GlowButton(
-      onClicked: () {
-        if (widget.onConfirmed != null) {
-          widget.onConfirmed!(fields);
-          return;
-        }
-
-        Navigator.of(context).pop(fields);
-      },
+    Widget confirmButton =DisabledWidget(
+                enabled: isValid(),
+      child: GlowButton(
+        shadowColor: Colors.blue,
+        onClicked: () {
+          if (widget.onConfirmed != null) {
+            widget.onConfirmed!(fields);
+            return;
+          }
+      
+          Navigator.of(context).pop(fields);
+        },
+      ),
     );
     return SizedBox(
       width: double.infinity,
