@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tenet_kit/flutter_tenet_kit.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
 import '../Header/HeaderWithCloseButton.dart';
@@ -73,16 +74,49 @@ class DialogContainer extends StatelessWidget {
           child: Column(
             spacing: _contentSpacing,
             children: [
+              //   if (title != null)
+              //     Column(
+              //       spacing: _contentSpacing,
+              //       children: [
+              //         HeaderV3(title: title!, onClosed: () => _handleClose(context)),
+              //         if(hasSeperator)  Container(width: double.infinity,height: 1,decoration: BoxDecoration(
+              //   gradient: LinearGradient(colors: [
+              //     Colors.transparent,Colors.black12,Colors.transparent
+              //   ])
+              // ),),
+              //       ],
+              //     ),
               if (title != null)
-                Column(
-                  spacing: _contentSpacing,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    HeaderV3(title: title!, onClosed: () => _handleClose(context)),
-                    if(hasSeperator)  Container(width: double.infinity,height: 1,decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [
-                Colors.transparent,Colors.black12,Colors.transparent
-              ])
-            ),),
+                    if (onClosed != null)
+                      HoverTracker(
+                        builder: (isHovered) {
+                          return GestureDetector(
+                            onTap: ()=>_handleClose(context),
+                            child: Icon(
+                              Icons.clear,
+                              color: isHovered ? Colors.black : Colors.black54,
+                              size: 17,
+                            ),
+                          );
+                        },
+                      )
+                    else
+                      Container(),
+
+                    Text(
+                      title!,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+
+                        fontFamily: 'yekan bakh',
+                        fontSize: 16,
+                        color: Colors.black87,
+                      ),
+                    ),
                   ],
                 ),
               Expanded(child: child),
