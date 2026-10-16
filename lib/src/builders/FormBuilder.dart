@@ -33,9 +33,9 @@ class PrimaryFormField extends PrimaryField<String> {
     this.persianDigit = true,
     this.trailingBuilder,
     this.formatters,
-    this.onChanged,
+    this.onChanged,FocusedBorderStyle ?borderStyle,
     GlobalKey<PrimaryTextFieldState>? key,
-  }) : key = key ?? GlobalKey<PrimaryTextFieldState>(),
+  }) :borderStyle = borderStyle??FocusedBorderStyle.doubled, key = key ?? GlobalKey<PrimaryTextFieldState>(),
        super(value);
 
   /// Optional label displayed above the field.
@@ -72,6 +72,8 @@ class PrimaryFormField extends PrimaryField<String> {
 
   /// Key used to access the underlying [PrimaryTextFieldState].
   final GlobalKey<PrimaryTextFieldState> key;
+
+  final FocusedBorderStyle borderStyle;
 
   /// Returns the confirmed value from the underlying text field.
   String getValue() {
@@ -156,7 +158,7 @@ class PrimaryFormBuilder extends StatefulWidget {
   static const double _fieldListVerticalPadding = 14;
   static const double _buttonWidth = 100;
   static const double _buttonHeight = 35;
-  static const double _buttonSpacing = 10;
+  static const double _buttonSpacing = 15;
 
   @override
   State<PrimaryFormBuilder> createState() => _PrimaryFormBuilderState();
@@ -326,6 +328,7 @@ class _PrimaryFieldView extends StatelessWidget {
       autoFocus: false,
       persianDigit: field.persianDigit,
       margin: EdgeInsets.zero,
+      borderStyle: field.borderStyle,
       formatters: field.formatters,
       textAlign: field.textAlign,
       textDirection: field.textDirection,
