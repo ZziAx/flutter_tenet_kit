@@ -354,6 +354,7 @@ class _PrimaryFieldView extends StatelessWidget {
       textAlign: field.textAlign,
       textDirection: field.textDirection,
       inputType: field.inputType,
+      validatingProcessStartReason:ValidatingProcessStartReason.changed,
       text: field.value,
       validators: field.validators ?? [],
       onFocusedOut: (value) => value,
