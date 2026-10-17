@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import '../builders/hover_tracker.dart';
 import '../Buttons/PrimaryButton.dart';
@@ -250,6 +251,12 @@ class _PrimarydropdownState extends State<Primarydropdown> {
                   width: 30,
                   height: 30,
                   child: Icon(icon, color: _color, size: item.size),
+                ),
+              if (svg != null)
+                SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: SvgPicture.string(svg, color: _color, width: item.size,height: item.size,),
                 ),
             ],
           ),
