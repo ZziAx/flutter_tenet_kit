@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import '../builders/hover_tracker.dart';
 import '../Buttons/PrimaryButton.dart';
@@ -55,7 +54,7 @@ class Primarydropdown extends StatefulWidget {
   BoxDecoration? decoration;
   double? itemHeight;
   double? width;
-
+  Widget? header;
   Primarydropdown({
     super.key,
     String? label,
@@ -68,6 +67,7 @@ class Primarydropdown extends StatefulWidget {
     this.tapToHide = true,
     this.triggerAction = "tap",
     this.bottom,
+    this.header,
     this.color = Colors.grey,
     this.decoration,
     this.child,
@@ -127,17 +127,19 @@ class _PrimarydropdownState extends State<Primarydropdown> {
                       width: widget.width ?? 180,
                       child: Column(
                         children: [
+                          if(widget.header!=null)
+                          widget.header!,
                           // Expanded(
                           //   child: Column(
                           //     children: [
-                                ...List.generate(widget._items!.length, (i) {
-                                  DropdownItem value = widget._items![i];
-                                  return DropdownItemWidget(item: value);
-                                }),
+                          ...List.generate(widget._items!.length, (i) {
+                            DropdownItem value = widget._items![i];
+                            return DropdownItemWidget(item: value);
+                          }),
+
                           //     ],
                           //   ),
                           // ),
-
                           if (widget.bottom?.isNotEmpty ?? false)
                             SizedBox(height: 30),
                           ...(widget.bottom ?? []).map((b) {
@@ -214,7 +216,7 @@ class _PrimarydropdownState extends State<Primarydropdown> {
   Widget DropdownItemWidget({required DropdownItem item}) {
     final theme = context.watch<TenetEssentialThemeData>();
 
-    Color color = item.color??Colors.black;
+    Color color = item.color ?? Colors.black;
 
     IconData? icon = item.icon;
     String? svg = item.svg;
@@ -232,9 +234,7 @@ class _PrimarydropdownState extends State<Primarydropdown> {
           padding: EdgeInsets.symmetric(horizontal: 10),
           alignment: Alignment.centerRight,
           width: double.infinity,
-          decoration: BoxDecoration(
-            color: isHovered?HexColor('fafafa'):Colors.transparent,
-            borderRadius: BorderRadius.circular(6)),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(6)),
 
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -262,7 +262,12 @@ class _PrimarydropdownState extends State<Primarydropdown> {
                   width: item.size,
                   height: item.size,
                   alignment: Alignment.center,
-                  child: SvgPicture.string(svg, color: _color, width: item.size,height: item.size,),
+                  child: SvgPicture.string(
+                    svg,
+                    color: _color,
+                    width: item.size,
+                    height: item.size,
+                  ),
                 ),
             ],
           ),
