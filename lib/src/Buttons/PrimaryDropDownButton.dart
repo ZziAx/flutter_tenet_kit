@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import '../builders/hover_tracker.dart';
 import '../Buttons/PrimaryButton.dart';
@@ -231,7 +232,9 @@ class _PrimarydropdownState extends State<Primarydropdown> {
           padding: EdgeInsets.symmetric(horizontal: 10),
           alignment: Alignment.centerRight,
           width: double.infinity,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(6)),
+          decoration: BoxDecoration(
+            color: isHovered?HexColor('fafafa'):Colors.transparent,
+            borderRadius: BorderRadius.circular(6)),
 
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
