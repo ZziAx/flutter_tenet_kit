@@ -14,12 +14,14 @@ class DropdownItem {
   String? svg;
   Color? color;
   double? size;
+  String? asset;
   Widget Function(Widget, Function, BuildContext)? builder;
   DropdownItem({
     required this.value,
     required this.identifier,
     this.svg,
     this.icon,
+    this.asset,
     this.color,
     this.builder,
     this.size,
@@ -127,8 +129,7 @@ class _PrimarydropdownState extends State<Primarydropdown> {
                       width: widget.width ?? 180,
                       child: Column(
                         children: [
-                          if(widget.header!=null)
-                          widget.header!,
+                          if (widget.header != null) widget.header!,
                           // Expanded(
                           //   child: Column(
                           //     children: [
