@@ -235,6 +235,7 @@ class _PrimarydropdownState extends State<Primarydropdown> {
 
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
+            spacing: 10,
             children: [
               Expanded(
                 child: AutoSizeText(
@@ -247,15 +248,17 @@ class _PrimarydropdownState extends State<Primarydropdown> {
               ),
 
               if (icon != null)
-                SizedBox(
-                  width: 30,
-                  height: 30,
+                Container(
+                  width: item.size,
+                  height: item.size,
+                  alignment: Alignment.center,
                   child: Icon(icon, color: _color, size: item.size),
                 ),
               if (svg != null)
-                SizedBox(
-                  width: 30,
-                  height: 30,
+                Container(
+                  width: item.size,
+                  height: item.size,
+                  alignment: Alignment.center,
                   child: SvgPicture.string(svg, color: _color, width: item.size,height: item.size,),
                 ),
             ],
