@@ -11,7 +11,7 @@ class DialogContainer extends StatelessWidget {
     super.key,
     required this.child,
     this.width = 500,
-    this.height = 300,
+    this.height,
     this.title,
     this.hasSeperator = false,
     this.onClosed,
@@ -25,7 +25,7 @@ class DialogContainer extends StatelessWidget {
   final double width;
 
   /// Dialog height.
-  final double height;
+  final double ? height;
 
   /// Optional dialog title.
   final String? title;
