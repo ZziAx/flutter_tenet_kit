@@ -7,7 +7,7 @@ import '../shadow_store/shadow_store.dart';
 
 /// A reusable dialog surface with optional title and close action.
 class DialogContainer extends StatelessWidget {
-   DialogContainer({
+  DialogContainer({
     super.key,
     required this.child,
     this.width = 500,
@@ -15,8 +15,9 @@ class DialogContainer extends StatelessWidget {
     this.title,
     this.hasSeperator = false,
     this.onClosed,
-    EdgeInsetsGeometry?padding
-  }):padding = padding??EdgeInsets.all(15);
+    this.actions,
+    EdgeInsetsGeometry? padding,
+  }) : padding = padding ?? EdgeInsets.all(15);
 
   /// Content displayed inside the dialog.
   final Widget child;
@@ -39,6 +40,7 @@ class DialogContainer extends StatelessWidget {
   /// If omitted, the current route is popped automatically.
   final VoidCallback? onClosed;
 
+  final List<Widget> ? actions;
   static const double _borderRadius = 15;
   static const double _contentSpacing = 15;
 
@@ -92,7 +94,11 @@ class DialogContainer extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    if (onClosed != null)
+                    Row(
+                      spacing: 7,
+                      children: [
+                 
+if (onClosed != null)
                       HoverTracker(
                         builder: (isHovered) {
                           return GestureDetector(
@@ -107,6 +113,10 @@ class DialogContainer extends StatelessWidget {
                       )
                     else
                       Container(),
+
+                           if(actions!=null)...actions!
+                    ],),
+                    
 
                     Text(
                       title!,
