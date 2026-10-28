@@ -110,9 +110,8 @@ if (onClosed != null)
                             ),
                           );
                         },
-                      )
-                    else
-                      Container(),
+                      ),
+                  
 
                            if(actions!=null)...actions!
                     ],),
