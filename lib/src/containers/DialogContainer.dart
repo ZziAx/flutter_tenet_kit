@@ -11,7 +11,7 @@ class DialogContainer extends StatelessWidget {
     super.key,
     required this.child,
     this.width = 500,
-    this.height = 300,
+    this.height,
     this.title,
     this.hasSeperator = false,
     this.onClosed,
@@ -26,7 +26,7 @@ class DialogContainer extends StatelessWidget {
   final double width;
 
   /// Dialog height.
-  final double height;
+  final double ?height;
 
   /// Optional dialog title.
   final String? title;
@@ -40,7 +40,7 @@ class DialogContainer extends StatelessWidget {
   /// If omitted, the current route is popped automatically.
   final VoidCallback? onClosed;
 
-  final List<Widget> ? actions;
+  final List<Widget>? actions;
   static const double _borderRadius = 15;
   static const double _contentSpacing = 15;
 
@@ -97,25 +97,24 @@ class DialogContainer extends StatelessWidget {
                     Row(
                       spacing: 7,
                       children: [
-                 
-if (onClosed != null)
-                      HoverTracker(
-                        builder: (isHovered) {
-                          return GestureDetector(
-                            onTap: () => _handleClose(context),
-                            child: Icon(
-                              Icons.clear,
-                              color: isHovered ? Colors.black : Colors.black54,
-                              size: 17,
-                            ),
-                          );
-                        },
-                      ),
-                  
+                        if (onClosed != null)
+                          HoverTracker(
+                            builder: (isHovered) {
+                              return GestureDetector(
+                                onTap: () => _handleClose(context),
+                                child: Icon(
+                                  Icons.clear,
+                                  color:
+                                      isHovered ? Colors.black : Colors.black54,
+                                  size: 17,
+                                ),
+                              );
+                            },
+                          ),
 
-                           if(actions!=null)...actions!
-                    ],),
-                    
+                        if (actions != null) ...actions!,
+                      ],
+                    ),
 
                     Text(
                       title!,
