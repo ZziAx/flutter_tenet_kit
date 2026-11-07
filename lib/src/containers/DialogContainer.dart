@@ -5,6 +5,7 @@ import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import '../Header/HeaderWithCloseButton.dart';
 import '../shadow_store/shadow_store.dart';
 
+
 /// A reusable dialog surface with optional title and close action.
 class DialogContainer extends StatelessWidget {
   DialogContainer({
@@ -129,7 +130,7 @@ class DialogContainer extends StatelessWidget {
                     ),
                   ],
                 ),
-              Expanded(child: child),
+              child,
             ],
           ),
         ),
