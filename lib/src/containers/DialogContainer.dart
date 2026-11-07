@@ -130,7 +130,7 @@ class DialogContainer extends StatelessWidget {
                     ),
                   ],
                 ),
-              IntrinsicHeight(child: child),
+            if(height!=null) Expanded(child: child) else IntrinsicHeight(child: child),
             ],
           ),
         ),
